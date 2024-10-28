@@ -111,7 +111,7 @@ class Vernier:
         :param var_noise variation of diff level --> noise:1
         :return: G
         """
-        if orient == 'V':   #我猜_orient是两个gabor转起来整体的角度
+        if orient == 'V':   
             _orient = 45
         elif orient == 'H':
             _orient = 135
@@ -121,7 +121,7 @@ class Vernier:
         x = np.arange(-size[1] // 4, size[1] // 4)
         y = np.arange(-size[0] // 4, size[0] // 4)
         X, Y = np.meshgrid(x, y)
-        self.params["orient"] = 0 * np.pi / 180  # ori of gabor is 0  #前面是师姐写的。gabor本身是0度
+        self.params["orient"] = 0 * np.pi / 180  # ori of gabor is 0  
         self.params["var_n"] = var_noise
         G = gabor(X, Y, self.params)
 
@@ -130,7 +130,7 @@ class Vernier:
         jitter = int((self.params["diff_level"][diff] + diff_noi) * label)
 
         self.V = np.zeros(size)
-        self.V[0:size[0] // 2, size[1] // 4-jitter:size[1] * 3 // 4-jitter] = G    # gabor计算结果
+        self.V[0:size[0] // 2, size[1] // 4-jitter:size[1] * 3 // 4-jitter] = G    
         self.V[size[0] // 2:, size[1] // 4 + jitter:size[1] * 3 // 4 + jitter] = G
         # pdb.set_trace()
         M = cv2.getRotationMatrix2D((size[0]//2, size[1]//2), _orient, 1)

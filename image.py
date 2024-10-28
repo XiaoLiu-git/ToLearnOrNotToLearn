@@ -32,7 +32,7 @@ class GenImg:
         self.label_reverse = label_reverse
 
     def gen_reference(self, diff=None):
-        # self.label_reverse 相关未改
+        # self.label_reverse 
         if diff is not None:
             self.diff = diff
 
@@ -96,7 +96,7 @@ class GenImg:
             self.diff = diff
 
         self.label = 1
-        vernier_p = self.vn.genVernier([200, self.h], self.orient,  # self.w // 2 因为vernier只占一半地方
+        vernier_p = self.vn.genVernier([200, self.h], self.orient,  # self.w // 2
                                        self.diff, self.label, self.var_n)
         # self.tg_p = (np.random.randn(self.w,
         #                           self.h) - 0.5) * 2 * self.noise_cutout + 1    #first add noise

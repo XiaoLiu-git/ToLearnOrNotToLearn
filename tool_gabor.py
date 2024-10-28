@@ -116,7 +116,7 @@ class Vernier:
         :param var_noise variation of diff level --> var:0.5
         :return: G
         """
-        if orient == 'V':  # 我猜_orient是两个gabor转起来整体的角度
+        if orient == 'V':  
             _orient = 45
         elif orient == 'H':
             _orient = 135
@@ -126,21 +126,21 @@ class Vernier:
         x = np.arange(-size[1] // 4, size[1] // 4)
         y = np.arange(-size[0] // 4, size[0] // 4)
         X, Y = np.meshgrid(x, y)
-        # ori of gabor is 0  #前面是师姐写的。gabor本身是0度
+        # ori of gabor is 0  
         self.params["orient"] = 0 * np.pi / 180
         self.params["var_n"] = var_noise
         G = gabor(X, Y, self.params)
 
         # arrange Gabor into Vernier
         diff_noi_func = stats.truncnorm(-1/self.params["var_n"], 1/self.params["var_n"],
-                                        loc=0, scale=self.params["var_n"])  # 在左右2个标准差处裁剪
+                                        loc=0, scale=self.params["var_n"])  
         # diff_noi = np.abs(np.around(np.random.normal(0,self.params["var_n"])))
         diff_noi = np.around(diff_noi_func.rvs(1))
         jitter = int((self.params["diff_level"][diff] + diff_noi) * label)
 
         self.V = np.zeros(size)
         self.V[0:size[0] // 2, size[1] // 4-jitter:size[1]
-               * 3 // 4-jitter] = G    # gabor计算结果
+               * 3 // 4-jitter] = G    
         self.V[size[0] // 2:, size[1] // 4 +
                jitter:size[1] * 3 // 4 + jitter] = G
         # pdb.set_trace()

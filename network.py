@@ -31,20 +31,20 @@ class Net_sCC(nn.Module):
         # x = torch.flatten(x, 1)
         x = self.readout(x)
         # pdb.set_trace()
-        x = torch.flatten(x, 1).unsqueeze(1) #需要添加一个channel维度给max_pool
+        x = torch.flatten(x, 1).unsqueeze(1) 
         # x = F.max_pool1d(x, 408)
         x = self.pool(x)
         x = torch.flatten(x, 1)
         return x
     
 def representation_torch(img_dataset, num_x=40, num_theta=18):
-    imgset = np.concatenate((img_dataset[:,:,-40:,:],img_dataset,img_dataset[:,:,:50,:]),axis=2)  #写死
+    imgset = np.concatenate((img_dataset[:,:,-40:,:],img_dataset,img_dataset[:,:,:50,:]),axis=2)  
     # generate gabor filter kernel
     [w, h] = img_dataset[0, 0].shape
-    func_size = [100, h, num_theta]  #整除取下  把w//4都改成100
+    func_size = [100, h, num_theta] 
     basis_gabor = np.zeros((num_theta, 100, h))
-    gb = Gabor(sigma=30, freq=.01) #二维矩阵
-    for theta in range(num_theta): #生成所有theta的gabor filter.每个[w // 4, h]
+    gb = Gabor(sigma=30, freq=.01) 
+    for theta in range(num_theta): 
         basis_gabor[theta,:, :] = gb.genGabor(func_size[:-1],
                                                 theta * 180 / num_theta)    
     # representation
@@ -95,7 +95,7 @@ def update_weight(w, inputs, l_lambda=.1,exposure=False):
     dw = np.mean(np.mean(inputs[:-1, :, :, :] * inputs[1:, :, :, :], axis=0),
                  axis=-1)
     if exposure :
-        w = np.concatenate((w[:22,:] - 100*l_lambda * dw.T[:22,:],w[22:-1,:] + l_lambda * dw.T[22:-1,:],w[-1:,:] - 100*l_lambda * dw.T[-1:,:]),axis=0) # loc2是前半
+        w = np.concatenate((w[:22,:] - 100*l_lambda * dw.T[:22,:],w[22:-1,:] + l_lambda * dw.T[22:-1,:],w[-1:,:] - 100*l_lambda * dw.T[-1:,:]),axis=0) 
     else:
         w = w + l_lambda * dw.T
     # print(dw)

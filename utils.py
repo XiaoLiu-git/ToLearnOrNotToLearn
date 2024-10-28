@@ -33,13 +33,13 @@ def ACC(outputs, labels, num_batch):
         acc([]): _description_
     """
     # pdb.set_trace()
-    num_test = len(outputs) // num_batch  # train处一样，test处不同
+    num_test = len(outputs) // num_batch  
     acc = np.zeros(num_test + 1)
 
     # if outputs.device!= 'cpu':
     #     outputs = outputs.cpu()
-    total = (torch.sign(outputs * labels) + 1) / 2   #到0/1
-    for i in range(num_test):       #此处已知test时是5个(x)其他地方也发现了别的个数(8)
+    total = (torch.sign(outputs * labels) + 1) / 2   
+    for i in range(num_test):       
         acc[i] = torch.sum(total[num_batch * i:num_batch * (i + 1)]) / num_batch
     acc[-1] = torch.sum(total) / len(outputs)
     return acc
