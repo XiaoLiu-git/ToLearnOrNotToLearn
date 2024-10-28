@@ -11,7 +11,7 @@ import image
 day = datetime.now().strftime('%Y-%m-%d-%H-%M-%S')
 foldername = './' + day
 utils.mkdir(foldername)
-num_section = 2
+num_section = 100
 pre_epoch_size = 20
 num_test = 20
 ori = 22.5
