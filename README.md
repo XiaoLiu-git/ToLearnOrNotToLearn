@@ -1,10 +1,10 @@
 # ToLearnOrNotToLearn
-Here are codes for our NeurIPS2024 paper ***To Learn or Not to Learn, That is the Question — A Feature-Task Dual Learning Model of Perceptual Learning***.
+Here is code for our NeurIPS2024 paper ***To Learn or Not to Learn, That is the Question — A Feature-Task Dual Learning Model of Perceptual Learning***.
 
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
 Now this repository only contains the reproduction of the double-training experiment (without visualization).
-Codes for other results in the paper will be updated soon.
+Code for other results in the paper will be updated soon.
 
 ## Installation
 
