@@ -16,13 +16,14 @@ parser.add_argument('--save_path', type=str, default='./result/double_training/'
 # training procedure parameters
 parser.add_argument('--num_repeat', type=int, default=100, help='Whole procedure repeat times')
 parser.add_argument('--pre_epoch_size', type=int, default=20, help='Pre-training epoch size')
-parser.add_argument('--conventional_epoch', type=int, default=10*20, help='Conventional training epoch size')
+parser.add_argument('--conventional_epoch', type=int, default=200, help='Conventional training epoch size default=10*20 10 sessions')
 parser.add_argument('--begin_epoch', type=int, default=20, help='Hebb learning start epoch')
 # network parameters
 parser.add_argument('--net_name', type=str, default='s_cc3', help='Network name')
-parser.add_argument('--l_lambda', type=float, default=0.3, help='Lambda value')
-parser.add_argument('--cnn_lr', type=float, default=1e-3, help='Learning rate for CNN')
+parser.add_argument('--l_lambda_pre', type=float, default=0.3, help='Pre-training learning rate for Hebbian')
 parser.add_argument('--cnn_lr_pre', type=float, default=1e-3, help='Pre-training learning rate for CNN')
+parser.add_argument('--l_lambda', type=float, default=0.3, help='Learning rate for Hebbian')
+parser.add_argument('--cnn_lr', type=float, default=1e-3, help='Learning rate for CNN')
 parser.add_argument('--device', type=str, default="cuda" if torch.cuda.is_available() else "cpu", help='Device to use')
 # stimulus parameters
 parser.add_argument('--phase_8', type=int, default=1, help='Phase 8 value')
@@ -52,9 +53,10 @@ begin_epoch = args.begin_epoch
 
 # network parameters
 net_name = args.net_name
+l_lambda_pre = args.l_lambda_pre
+cnn_lr_pre = args.cnn_lr_pre
 l_lambda = args.l_lambda
 cnn_lr = args.cnn_lr
-cnn_lr_pre = args.cnn_lr_pre
 device = args.device
 
 # stimulus parameters
@@ -132,7 +134,7 @@ def ff_train(s, t_label, t_data, show_epc, bg_epoch=0, phase=0, freq=0.02, diff=
     noise_cutout: noise cutout
     contrast: contrast
 
-    return: acc_list, loss_list, net, weight, optimizer, criterion
+    return: net_1, net_2, weight, cnn_1_optimizer, cnn_2_optimizer, criterion
     '''
     running_loss = 0.0
     # network   
@@ -204,7 +206,7 @@ def ff_train(s, t_label, t_data, show_epc, bg_epoch=0, phase=0, freq=0.02, diff=
             inputs = utils.norma_rep(inputs)
             inputs = network.feedforward(inputs, weight)
             inputs = utils.norma_rep(inputs)
-            weight = network.update_weight(weight, inputs, l_lambda=l_lambda)
+            weight = network.update_weight(weight, inputs, l_lambda=l_lambda_pre)
             if pre_epoch_//2==0:
                 cnn_1_optimizer_pre.zero_grad()
             else:
@@ -219,7 +221,7 @@ def ff_train(s, t_label, t_data, show_epc, bg_epoch=0, phase=0, freq=0.02, diff=
             else:
                 net_2.train()
                 outputs = net_2(b_x)
-            outputs = outputs.squeeze(1)   # 
+            outputs = outputs.squeeze(1)   
             loss = criterion(outputs, (b_labels + 1) // 2)
             loss.backward()
             if pre_epoch_//2==0:

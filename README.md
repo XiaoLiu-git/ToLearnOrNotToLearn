@@ -30,9 +30,10 @@ Code for other results in the paper will be updated soon.
 ## Reproduce Figures in the Paper
 
 1. First Experiment
-
-    (If you have already run the fourth experiment data, you can reuse it.)
+    
     Data preparing:
+    
+    (If you have already run the fourth experiment data, you can reuse it.)
     ```bash
     python run_double_training.py --save_path=./result/first/
     ```
@@ -41,7 +42,10 @@ Code for other results in the paper will be updated soon.
 
     Data preparing:
     ```bash
-    python .py
+    <!-- for random -->
+    python run_random_rotating.py --training_mode=random --save_path=./result/second/random/
+    <!-- for rotating -->
+    python run_random_rotating.py --training_mode=rotating --save_path=./result/second/rotating/
     ```
 
 3. Third Experiment
