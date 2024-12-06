@@ -3,7 +3,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 import numpy as np
 
-from tool_gabor_45 import Vernier, Gabor
+from tool_gabor import Gabor
 import utils
 
 class Net_sCC(nn.Module):

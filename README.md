@@ -21,17 +21,52 @@ Code for other results in the paper will be updated soon.
 
 | File | Description |
 | ---- | ----------- |
-| **db_after_threshold_pretrain_2cnn_sepa.py** | Main script that reproduce the double-training experiment results (without visualization). |
+| **run_double_training.py** | Main script that reproduce the double-training experiment results (without visualization). |
 | **image.py** | Contains helper functions for image stimulus generation. |
 | **network.py** | Defines functions related to the neural network architecture. 
 | **tool_gabor.py** | Provides general Gabor filter tools. |
-| **tool_gabor_45.py** | Another version of tool_gabor.py. |
 | **utils.py** | Contains miscellaneous utility functions used across the project, such as file handling, logging, and other common tasks that simplify coding and improve code readability. |
+
+## Reproduce Figures in the Paper
+
+1. First Experiment
+
+    (If you have already run the fourth experiment data, you can reuse it.)
+    Data preparing:
+    ```bash
+    python run_double_training.py --save_path=./result/first/
+    ```
+
+2. Second Experiment
+
+    Data preparing:
+    ```bash
+    python .py
+    ```
+
+3. Third Experiment
+
+    Data preparing:
+    ```bash
+    python run_double_training.py --noise_cutout=2 --conventional_epoch=40 --save_path=./result/third/2sessions/
+    python run_double_training.py --noise_cutout=2 --conventional_epoch=80 --save_path=./result/third/4sessions/
+    python run_double_training.py --noise_cutout=2 --conventional_epoch=160 --save_path=./result/third/8sessions/
+    python run_double_training.py --noise_cutout=2 --conventional_epoch=240 --save_path=./result/third/12sessions/
+    ```
+
+4. Fourth Experiment
+
+    Data preparing:
+
+    (If you have already run the first experiment data, you can reuse it.)
+    ```bash
+    python run_double_training.py --save_path=./result/fourth/
+    ```
 
 ## Usage
 
 1. Run the main script:
-    ```bash
+    ```bashs
     python db_after_threshold_pretrain_2cnn_sepa.py
     ```
 2. (Optional) Customize parameters in each module as needed.

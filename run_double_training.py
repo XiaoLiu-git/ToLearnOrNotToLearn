@@ -3,44 +3,75 @@ import numpy as np
 import torch
 import torch.optim as optim
 from tqdm import tqdm
+import argparse
 
 import utils
 import network
 import image
 
+# Argument parser
+parser = argparse.ArgumentParser(description='Double Training Script')
+# save path
+parser.add_argument('--save_path', type=str, default='./result/double_training/', help='Saving path')
+# training procedure parameters
+parser.add_argument('--num_repeat', type=int, default=100, help='Whole procedure repeat times')
+parser.add_argument('--pre_epoch_size', type=int, default=20, help='Pre-training epoch size')
+parser.add_argument('--conventional_epoch', type=int, default=10*20, help='Conventional training epoch size')
+parser.add_argument('--begin_epoch', type=int, default=20, help='Hebb learning start epoch')
+# network parameters
+parser.add_argument('--net_name', type=str, default='s_cc3', help='Network name')
+parser.add_argument('--l_lambda', type=float, default=0.3, help='Lambda value')
+parser.add_argument('--cnn_lr', type=float, default=1e-3, help='Learning rate for CNN')
+parser.add_argument('--cnn_lr_pre', type=float, default=1e-3, help='Pre-training learning rate for CNN')
+parser.add_argument('--device', type=str, default="cuda" if torch.cuda.is_available() else "cpu", help='Device to use')
+# stimulus parameters
+parser.add_argument('--phase_8', type=int, default=1, help='Phase 8 value')
+parser.add_argument('--freq', type=float, default=0.02, help='Frequency value')
+parser.add_argument('--noise_cutout', type=int, default=0.6, help='Noise cutout value')
+parser.add_argument('--contrast', type=float, default=0.6, help='Contrast value')
+parser.add_argument('--diff', type=int, default=9, help='Diff value')
+parser.add_argument('--label_reverse', type=bool, default=True, help='Label reverse flag')
+# test stimulus parameters
+parser.add_argument('--num_test', type=int, default=20, help='Number of tests')
+parser.add_argument('--ori', type=float, default=22.5, help='Orientation value')
+parser.add_argument('--loc', type=int, default=5, help='Location value')
+parser.add_argument('--print_test', type=bool, default=False, help='Print test flag')
+
+args = parser.parse_args()
+
 # save path
 day = datetime.now().strftime('%Y-%m-%d-%H-%M-%S')
-name_head = './double_training/' + day + '/'
+name_head = args.save_path + day + '/'
 utils.mkdir(name_head)
 
 # training procedure parameters
-num_repeat = 2             # whole procedure repeat times
-pre_epoch_size = 20
-conventional_epoch = 1*20
-begin_epoch = 20     # hebb learning start epoch
+num_repeat = args.num_repeat
+pre_epoch_size = args.pre_epoch_size
+conventional_epoch = args.conventional_epoch
+begin_epoch = args.begin_epoch
 
 # network parameters
-net_name = 's_cc3'
-l_lambda = .3
-cnn_lr = 1e-3
-cnn_lr_pre = 1e-3
-device = "cuda" if torch.cuda.is_available() else "cpu"
+net_name = args.net_name
+l_lambda = args.l_lambda
+cnn_lr = args.cnn_lr
+cnn_lr_pre = args.cnn_lr_pre
+device = args.device
 
 # stimulus parameters
-phase_8 = 1
-phase = phase_8*np.pi/8
-freq = 0.02
-noise_cutout = 2
-contrast = 0.6
-diff = 9
-label_reverse = True
+phase_8 = args.phase_8
+phase = phase_8 * np.pi / 8
+freq = args.freq
+noise_cutout = args.noise_cutout
+contrast = args.contrast
+diff = args.diff
+label_reverse = args.label_reverse
 
 # test stimulus parameters
-num_test = 20
-ori = 22.5
+num_test = args.num_test
+ori = args.ori
 num_ori = int(180 / ori)
-loc = 5
-print_test = False
+loc = args.loc
+print_test = args.print_test
 
 # for data saving (1:ori1, 2:ori2)
 # 1
