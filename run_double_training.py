@@ -77,7 +77,6 @@ print_test = args.print_test
 
 # for data saving (1:ori1, 2:ori2)
 # 1
-AccALL_1 = np.zeros([num_repeat, 1+conventional_epoch//2, 5])
 Acc_test_1 = np.zeros([num_repeat, conventional_epoch//2, int(40 / loc), int(180 / ori), 10])
 Acc_test_db_1 = np.zeros([num_repeat, 200, int(40 / loc), int(180 / ori), 10])
 Acc_test_pre_1 = np.zeros(
@@ -85,7 +84,6 @@ Acc_test_pre_1 = np.zeros(
 Acc_traindb_1 = np.zeros([num_repeat, 200])
 Loss_traindb = np.zeros([num_repeat, 200])
 # 2
-AccALL_2 = np.zeros([num_repeat, 1+conventional_epoch//2, 5])
 Acc_test_2 = np.zeros([num_repeat, conventional_epoch//2, int(40 / loc), int(180 / ori), 10])
 Acc_test_db_2 = np.zeros([num_repeat, 200, int(40 / loc), int(180 / ori), 10])
 Acc_test_pre_2 = np.zeros(
@@ -389,14 +387,12 @@ for s in tqdm(range(num_repeat)):
 
 # save the results
 #1
-np.save(name_head + 'AccALL_1.npy', AccALL_1)
 np.save(name_head + 'Acc_test_1.npy', Acc_test_1)
 np.save(name_head + 'Acc_testdb_1.npy', Acc_test_db_1)
 np.save(name_head + 'Acc_testpre_1.npy', Acc_test_pre_1)
 np.save(name_head + 'Acc_traindb_1.npy', Acc_traindb_1)                            
 np.save(name_head + 'Loss_traindb.npy', Loss_traindb)
 #2
-np.save(name_head + 'AccALL_2.npy', AccALL_2)
 np.save(name_head + 'Acc_test_2.npy', Acc_test_2)
 np.save(name_head + 'Acc_testdb_2.npy', Acc_test_db_2)
 np.save(name_head + 'Acc_testpre_2.npy', Acc_test_pre_2)

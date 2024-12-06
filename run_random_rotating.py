@@ -78,7 +78,6 @@ loc = args.loc
 print_test = args.print_test
 
 # for data saving (1:ori1, 2:ori2)
-AccALL = np.zeros([num_repeat, 1+conventional_epoch//2, 5])
 Acc_test = np.zeros([num_repeat, conventional_epoch//2, int(80 / loc), int(180 / ori), 10])
 Acc_test_pre = np.zeros(
     [num_repeat, pre_epoch_size, int(80 / loc), int(180 / ori), 10])
@@ -508,7 +507,6 @@ for s in tqdm(range(num_repeat)):
     )  
 
 # save the results
-np.save(name_head + 'AccALL.npy', AccALL)
 np.save(name_head + 'Acc_test.npy', Acc_test)
 np.save(name_head + 'Acc_testpre.npy', Acc_test_pre)
 np.save(name_head + 'Acc_10diff_train.npy', Acc_10diff_train)
