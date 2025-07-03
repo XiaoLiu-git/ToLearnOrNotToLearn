@@ -3,3 +3,5 @@ numpy==1.24.4
 matplotlib==3.7.4
 opencv-python==4.9.0.80
 scipy==1.10.1
+tqdm==4.67.1
+seaborn==0.13.2

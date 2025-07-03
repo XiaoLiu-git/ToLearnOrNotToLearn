@@ -6,11 +6,25 @@ Here is code for our NeurIPS2024 paper ***To Learn or Not to Learn, That is the 
 ## Installation
 
 1. Clone the repository:
+
+    (Download code and results, may be slow)
     ```bash
     git clone https://github.com/XiaoLiu-git/ToLearnOrNotToLearn.git
     ```
-2. Install the required packages:
+    (Download only code)
+
     ```bash
+    git clone --filter=blob:none --no-checkout https://github.com/XiaoLiu-git/ToLearnOrNotToLearn.git
+    cd ToLearnOrNotToLearn
+    git sparse-checkout init --cone
+    git sparse-checkout set .
+    git checkout
+    ```
+
+2. Install the required packages
+    ```bash
+    conda create -n ToLearnOrNotToLearnEnv python=3.10 -y
+    conda activate ToLearnOrNotToLearnEnv
     pip install -r requirements.txt
     ```
 
@@ -36,7 +50,7 @@ Here is code for our NeurIPS2024 paper ***To Learn or Not to Learn, That is the 
     
     (If you have already run the fourth experiment data, you can reuse it. Here we only see the conventional training part.)
     ```bash
-    python run_double_training.py --save_path=./result/first/
+    python run_double_training.py --save_path=./myresult/first/
     ```
     Visualization:
 
@@ -47,9 +61,9 @@ Here is code for our NeurIPS2024 paper ***To Learn or Not to Learn, That is the 
     Data preparing:
     ```bash
     <!-- for random -->
-    python run_random_rotating.py --training_mode=random --save_path=./result/second/random/
+    python run_random_rotating.py --training_mode=random --save_path=./myresult/second/random/
     <!-- for rotating -->
-    python run_random_rotating.py --training_mode=rotating --save_path=./result/second/rotating/
+    python run_random_rotating.py --training_mode=rotating --save_path=./myresult/second/rotating/
     ```
     Run all the code in ```visualize_second_experiment.ipynb``` to get exp2_random_threshold_100.svg, exp2_rotating_threshold_100.svg and exp2_improvement_100.svg. 
 
@@ -57,10 +71,10 @@ Here is code for our NeurIPS2024 paper ***To Learn or Not to Learn, That is the 
 
     Data preparing:
     ```bash
-    python run_double_training.py --noise_cutout=2 --l_lambda_pre=3 --l_lambda=3 --conventional_epoch=40 --save_path=./result/third/2sessions/
-    python run_double_training.py --noise_cutout=2 --l_lambda_pre=3 --l_lambda=3 --conventional_epoch=80 --save_path=./result/third/4sessions/
-    python run_double_training.py --noise_cutout=2 --l_lambda_pre=3 --l_lambda=3 --conventional_epoch=160 --save_path=./result/third/8sessions/
-    python run_double_training.py --noise_cutout=2 --l_lambda_pre=3 --l_lambda=3 --conventional_epoch=240 --save_path=./result/third/12sessions/
+    python run_double_training.py --noise_cutout=2 --l_lambda_pre=3 --l_lambda=3 --conventional_epoch=40 --save_path=./myresult/third/2sessions/
+    python run_double_training.py --noise_cutout=2 --l_lambda_pre=3 --l_lambda=3 --conventional_epoch=80 --save_path=./myresult/third/4sessions/
+    python run_double_training.py --noise_cutout=2 --l_lambda_pre=3 --l_lambda=3 --conventional_epoch=160 --save_path=./myresult/third/8sessions/
+    python run_double_training.py --noise_cutout=2 --l_lambda_pre=3 --l_lambda=3 --conventional_epoch=240 --save_path=./myresult/third/12sessions/
     ```
     Visualization:
 
@@ -71,7 +85,7 @@ Here is code for our NeurIPS2024 paper ***To Learn or Not to Learn, That is the 
 
     (If you have already run the first experiment data, you can reuse it. It also has the double training part data, just only analyse the conventional training part.)
     ```bash
-    python run_double_training.py --save_path=./result/fourth/
+    python run_double_training.py --save_path=./myresult/fourth/
     ```
     Visualization:
 
